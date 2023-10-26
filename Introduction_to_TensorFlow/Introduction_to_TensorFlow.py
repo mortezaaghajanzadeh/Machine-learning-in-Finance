@@ -34,3 +34,23 @@ print(gray.numpy())
 gray = reshape(gray, [2*2,3])
 gray.numpy()
 #%% Import data
+features = constant([1,2,3,4,5,6,7,8,9,10], dtype=float32)
+targets = constant([2,4,6,8,10,12,14,16,18,20], dtype=float32)
+slope = Variable(0.5)
+
+def linear_regression(intercept,slope = slope, features = features):
+    return intercept + features*slope
+def loss_function(intercept,slope,targets = targets, features = features):
+    predictions = linear_regression(intercept,slope)
+    return keras.losses.mse(targets,predictions)
+
+loss_function(0.1,0.1)
+#%%
+inputs = constant([[1,35]])
+weights = Variable([[-0.05],[-0.01]])
+bias = Variable([0.5])
+product = matmul(inputs, weights)
+
+dense = keras.activations.sigmoid(product + bias)
+
+
