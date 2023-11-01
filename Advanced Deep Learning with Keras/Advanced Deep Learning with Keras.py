@@ -1,7 +1,7 @@
 #%%
 import pandas as pd
 import numpy as np
-from tensorflow.keras.layers import Dense, Input, Embedding, Flatten
+from tensorflow.keras.layers import Dense, Input, Embedding, Flatten, Add
 from tensorflow.keras.models import Model
 from tensorflow.keras.utils import plot_model
 
@@ -49,3 +49,13 @@ input_tensor_2 = Input(shape=(1,))
 shared_layer = Dense(1)
 output_tensor_1 = shared_layer(input_tensor_1)
 output_tensor_2 = shared_layer(input_tensor_2)
+
+# %%
+input_tensor_1 = Input(shape=(1,))
+input_tensor_2 = Input(shape=(1,))
+output_tensor = Add()([input_tensor_1, input_tensor_2])
+input_tensor_3 = Input(shape=(1,))
+output_tensor = Add()([input_tensor_1, input_tensor_2, input_tensor_3])
+model = Model([input_tensor_1, input_tensor_2, input_tensor_3], output_tensor)
+model.compile(optimizer='adam', loss='mae')
+model.fit([games_tourney['team1'], games_tourney['team2'], games_tourney['home']], games_tourney['score_diff'], verbose=True, epochs=1)
