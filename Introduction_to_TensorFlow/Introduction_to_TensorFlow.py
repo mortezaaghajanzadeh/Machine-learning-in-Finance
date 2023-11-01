@@ -1,6 +1,6 @@
 #%%
 from tensorflow import *
-
+import numpy as np
 #%%
 a0 = Variable([1,2,3,4,5,6,7,8,9,10], dtype=float32)
 a1 = Variable([1,2,3,4,5,6,7,8,9,10], dtype=int16)
@@ -150,3 +150,50 @@ model_predictions = model(w1, b1, w2, b2, test_features)
 
 # Construct the confusion matrix
 confusion_matrix(test_targets, model_predictions)
+#%%
+model = keras.Sequential()
+model.add(keras.layers.Dense(16, activation='relu', input_shape=(28*28,)))
+model.add(keras.layers.Dense(8, activation='relu'))
+model.add(keras.layers.Dense(4, activation='softmax'))
+model.compile(optimizer='adam', loss='categorical_crossentropy')
+print(model.summary())
+#%%
+model1_inputs = keras.Input(shape=(28*28,))
+model2_inputs = keras.Input(shape=(10,))
+
+model1_layer1 = keras.layers.Dense(12, activation='relu')(model1_inputs)
+model1_layer2 = keras.layers.Dense(4, activation='softmax')(model1_layer1)
+
+model2_layer1 = keras.layers.Dense(8, activation='relu')(model2_inputs)
+model2_layer2 = keras.layers.Dense(4, activation='softmax')(model2_layer1)
+
+merged = keras.layers.concatenate([model1_layer2, model2_layer2])
+model = keras.Model(inputs=[model1_inputs, model2_inputs], outputs=merged)
+model.compile(optimizer='adam', loss='categorical_crossentropy')
+print(model.summary())
+# %%
+train_data = np.random.random((1000, 784))
+train_labels = np.random.randint(10, size=(1000, 4))
+
+
+model = keras.Sequential()
+model.add(keras.layers.Dense(5e3, activation='relu', input_shape=(28*28,)))
+model.add(keras.layers.Dense(4, activation='softmax'))
+model.compile(optimizer="RMSprop", loss='categorical_crossentropy',metrics=['accuracy'])
+model.fit(train_data, train_labels,epochs=10, batch_size=16, validation_split=0.2)
+# model.evaluate(test_data, test_labels)
+# %%
+
+size = feature_column.numeric_column('size')
+rooms = feature_column.categorical_column_with_vocabulary_list('rooms', ['1','2','3','4','5'])
+features_list = [size, rooms]
+def input_fn():
+    features = {'size': [1340, 1690, 2720], 'rooms': [1, 3, 4]}
+    labels = [221900, 538000, 180000]
+    return features, labels
+# predict house price (continues target)
+model0 = estimator.DNNRegressor(feature_columns=features_list, hidden_units=[10,6,6,3])
+model0.train(input_fn, steps=20)
+# Classification task
+model1 = estimator.DNNClassifier(feature_columns=features_list,hidden_units=[32,16,8],n_classes=4)
+model1.train(input_fn, steps=20)
