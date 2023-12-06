@@ -1,0 +1,9 @@
+Athey, S., G.W. Imbens, J. Metzger, and E. Munro (2019) “Using Wasserstein Generative Adversarial Networks for the Design of Monte Carlo Simulations,” Working Paper 3824.
+
+Goodfellow, I., Y. Bengio, and A. Courville (2017) Deep Learning, Cambridge, MA: MIT Press.
+
+Hull, Isaiah (2021) Machine Learning for Economics and Finance in TensorFlow 2: Apress, 10.1007/978-1-4842-6373-0.
+
+Kaji, T., E. Manresa, and G. Pouliot (2018) “Deep Inference: Artificial Intelligence for Structural Estimation,” working paper.
+
+Kingma, D.P. and M. Welling (2019) “An Introduction to Variational Autoencoders,” Foundations and Trends in Machine Learning, 12 (4), 307–392.
