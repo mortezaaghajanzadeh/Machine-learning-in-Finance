@@ -1,2 +1,2 @@
 Machine Learning for Economics and Finance in TensorFlow 2.pdf
-bfg --strip-blobs-bigger-than 100M
+bfg --strip-blobs-bigger-than 90M
